@@ -9,7 +9,7 @@
 using namespace std;
 
 
-// Color Codes: 12 = Red, 10 = Green, 14 = Yellow, 7 = Reset (White)
+
 void setColor(int colorCode) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, colorCode);
@@ -33,22 +33,22 @@ public:
 	}
 };
 
-// bool helps us to learn if it is false or true 
+
 
 bool checkOnlyNumbers(string text) {
     
-    // Check if the text length is exactly 10
+    \
     if (text.length() != 10) {
-        return false; // Wrong size, so return false immediately
+        return false; 
     }
     
-    // Classic for loop using an index counter 'i'
+    
     for (int i = 0; i < text.length(); i++) {
-        char singleLetter = text[i]; // Get the character at position 'i'
+        char singleLetter = text[i]; 
         
-        // Step 3: Check if the character is outside the range of '0' to '9'
+        
         if (singleLetter < '0' || singleLetter > '9') {
-            return false; // Found a letter or symbol, so return false
+            return false; 
         }
        
     }
@@ -57,23 +57,16 @@ bool checkOnlyNumbers(string text) {
 }
 
 bool isValidCitizenNo(string text) {
-    // Step A: Check if the field is empty or completely blank
-    if (text.length() < 5 || text.length() > 20) {
-        return false; // Invalid length range
+    
+   if (text.length() < 7 || text.length() > 16) {
+        return false;
     }
     
-    // Step B: Loop through every character inside the string
-    for (int i = 0; i < text.length(); i++) {
-        char c = text[i];
-        
-        // Allow digits (0-9), hyphens (-), and empty spaces ( )
-        if ((c < '0' || c > '9') && c != '-' && c != ' ') {
-            return false; // Found a letter or illegal special character
-        }
-    }
+   const regex citizenPattern(R"(^[0-9]+[-/][0-9]+[-/][0-9]+[-/]*[0-9]*$)");
     
-    return true; // The string format is clean
+    return regex_match(text, citizenPattern);
 }
+
 
 bool isValidEmail(const string email)
 {
@@ -82,29 +75,29 @@ bool isValidEmail(const string email)
 }
 
 bool checkOnlyLetters(string text) {
-    // Step A: If the name is completely empty, it is invalid
+    
     if (text.length() == 0) {
         return false;
     }
     
-    // Step B: Loop through every character inside the string
+    
     for (int i = 0; i < text.length(); i++) {
         char letter = text[i];
         
-        // Check if the character is NOT a lower letter, NOT an upper letter, and NOT a blank space
+       
         if ((letter < 'a' || letter > 'z') && (letter < 'A' || letter > 'Z') && letter != ' ') {
-            return false; // Found a digit, symbol, or special character
+            return false; 
         }
     }
     
-    return true; // The name contains letters and spaces only
+    return true; 
 }
 
 
 string toLowerCase(string text) {
     for (int i = 0; i < text.length(); i++) {
         if (text[i] >= 'A' && text[i] <= 'Z') {
-            text[i] = text[i] + 32; // Converts uppercase to lowercase via ASCII math
+            text[i] = text[i] + 32; 
         }
     }
     return text;
@@ -116,7 +109,7 @@ string askAndValidateBirthday()
     setColor(14);
     cout << "\n\t--- Enter Birthday Components ---\n";
     
-    // 1. Independent Day Loop
+  
     while (true) {
     	setColor(10);
         cout << "\tEnter Day (1-31): ";
@@ -132,7 +125,7 @@ string askAndValidateBirthday()
         cin.ignore(10000, '\n');
     }
     
-    // 2. Independent Month Loop
+  
     while (true) {
     	setColor(10);
         cout << "\tEnter Month (1-12): ";
@@ -147,7 +140,7 @@ string askAndValidateBirthday()
         cin.ignore(10000, '\n');
     }
     
-    // 3. Independent Year Loop
+    
     while (true) {
     	setColor(10);
         cout << "\tEnter Year (1900-2026): ";
@@ -294,6 +287,11 @@ class BusinessContact : public Contact {
 				company=comp;
 				designation=desig;	
 			} 
+			
+			 string getDesignation() const {
+                return designation;
+            }
+            
 		    void save(ofstream& out) const override 
 			{
 				Contact::save(out); 
@@ -309,7 +307,7 @@ class BusinessContact : public Contact {
 		    void display() const override 
 			{ 
 		        Contact::display(); 
-		        setColor(10);cout << "\t| Type: Business\t| Co: ";setColor(7);cout << company;setColor(10);cout << "\t| Desig: ";setColor(7);cout << designation << endl; 
+		        setColor(10);cout << "\n\t| Type: Business\t| Co: ";setColor(7);cout << company;setColor(10);cout << "\t| Desig: ";setColor(7);cout << designation << endl; 
 		    }
 };
 
@@ -351,7 +349,7 @@ class PhoneBook
             break; // Break the input loop when entry matches perfectly
         }
         
-        setColor(12);// Handle invalid entry (out of range or text/garbage input symbols)
+        setColor(12);
         cout << "\n\tInvalid choice! Please enter again. Press Enter to retry...";
         setColor(7);
         cin.clear();            // Reset the internal stream error state flags
@@ -359,7 +357,7 @@ class PhoneBook
         cin.get(); 
 }
 			
-			// Validate choice input format
+			
 			
 	        if(type==3)
 	        {
@@ -382,9 +380,9 @@ class PhoneBook
 	        string n,c, e1, e2, e, p;
 	        
 	        system("cls");
-	         // Clear buffer immediately after reading the numeric choice
+	         
 	        
-	        // 2. Loop for Immediate Name Validation
+	        
 	        while (true) {
 	        	 setColor(10);
                 cout << "\tEnter Name: "; 
@@ -398,7 +396,7 @@ class PhoneBook
                  
             }
 	        
-	        // 3. Loop for Immediate Phone Validation
+	        
 	        while (true) {
 	        	 setColor(10);
                 cout << "\tEnter 10-Digit Phone: "; 
@@ -422,18 +420,17 @@ class PhoneBook
         cout << "\tError: Phone number must be exactly 10 digits!\n" << endl;
     } 
     else {
-        break; // It has no letters and is exactly 10 digits. Perfect! Exit loop.
+        break; 
     }
             }
 
 			
 	        try {
-	            // 4. Duplicate Check (Throws Custom Exception as requested by syllabus)
-	           // Create the temporary object block using the incoming phone number 'p'
+	            
 	            Contact tempContact("", p, "","");
-	            // 4. Duplicate Check (Now activated using your custom operator==)
+	            
 	            for (int i = 0; i < pCount; i++) {
-	                if (personal[i] == tempContact) { // <-- Triggers your clean operator==
+	                if (personal[i] == tempContact) { 
 	                 setColor(12);
 	                    throw DupException("Error: This phone number already exists in Personal Contacts!");
 	                }
@@ -443,7 +440,7 @@ class PhoneBook
                 }
 	            }
 	            for (int i = 0; i < bCount; i++) {
-	                if (business[i] == tempContact) { // <-- Triggers your clean operator==
+	                if (business[i] == tempContact) {
 	                 setColor(12);
 	                    throw DupException("Error: This phone number already exists in Business Contacts!");
 	                }
@@ -478,11 +475,11 @@ class PhoneBook
         }
         for (int i = 0; i < bCount; i++) {
             if (business[i].getEmail() == e) { 
-                throw DupException("Error: This email already exists in Business Contacts!"); // Fixed your typo here from Personal to Business
+                throw DupException("Error: This email already exists in Business Contacts!");
             }
         }
         
-        // Inside PhoneBook::addContact() right below the phone/email inputs:
+        
 while (true) {
 	 setColor(10);
             cout << "\tEnter Citizen Number (Digits & Hyphens only): ";
@@ -490,7 +487,7 @@ while (true) {
             getline(cin, c);
             if (isValidCitizenNo(c)) break;
              setColor(12);
-            cout << "\tInvalid Citizen Number! Size must be 5-20 characters.\n\n";
+            cout << "\tInvalid Citizen Number! Size must be 7-16 characters.\n\n";
         }
 
 
@@ -509,22 +506,22 @@ for(int i=0;i<bCount;i++){
 	            
 	                       if (type == 1) 
             {
-                // 1. Validated Relation Field
+                
                 while(true) {
                 	 setColor(10);
                     cout << "\tEnter Relation: "; 
                      setColor(7);
                     getline(cin, e1);
-                    if (checkOnlyLetters(e1) == true) { // FIXED: Testing e1 variable
+                    if (checkOnlyLetters(e1) == true) {
                         break; 
                     }
                      setColor(12);
                     cout << "\tInvalid Input! Relation can only contain alphabetical letters and spaces.\n" << endl;
                 }
                 
-                // 2. Validated Birthday Field
+                
                  setColor(10);
-                    cout << "\tEnter Birthday (Numbers only, e.g., DDMMYYYY): "; 
+                    cout << "\tEnter Birthday (Numbers only, e.g., DD/MM/YYYY): "; 
                     e2 = askAndValidateBirthday(); 
                 
                 
@@ -532,13 +529,13 @@ for(int i=0;i<bCount;i++){
             }
             else 
             {
-                // 3. FIXED: Added full validation to Business Contact Fields
+                
                 while(true) {
                 	 setColor(10);
                     cout << "\tEnter Company Name: "; 
                      setColor(7);
                     getline(cin, e1);
-                    if (checkOnlyLetters(e1) == true) { // Reuses your letters utility rule
+                    if (checkOnlyLetters(e1) == true) { 
                         break;
                     }
                      setColor(12);
@@ -614,7 +611,7 @@ for(int i=0;i<bCount;i++){
 		        return;
 		    }
 		    
-		    in >> pCount; //since the obj is "in" we use it to read the data
+		    in >> pCount; 
 		    in.ignore(); 
 		    for (int i = 0; i < pCount; i++) {
 		        personal[i].load(in); 
@@ -630,82 +627,13 @@ for(int i=0;i<bCount;i++){
 	}
 		
 		
-		/*void deleteContact() 
-		{
-	
-	system("cls");
-    cin.ignore(); // Discard trailing newline characters safely
-    
-    string searchPhone;
-    cout << "\t_________________________________________________\n\n";
-    cout << "\t                 DELETE A CONTACT                \n";
-    cout << "\t_________________________________________________\n\n";
-    cout << "\tEnter 10-Digit Phone Number to Delete: ";
-    getline(cin, searchPhone);
-    
-    bool found = false;
-
-    // Look inside Personal Contacts
-    for (int i = 0; i < pCount; i++) {
-        if (personal[i].getPhone() == searchPhone) {
-            found = true;
-            // Shift elements left to overwrite the deleted contact
-            for (int j = i; j < pCount - 1; j++) {
-                personal[j] = personal[j + 1];
-            }
-            pCount--; // Decrease the personal contact counter
-            break;
-        }
-    }
-
-    // If not found in personal, look inside Business Contacts
-    if (!found) {
-        for (int i = 0; i < bCount; i++) {
-            if (business[i].getPhone() == searchPhone) {
-                found = true;
-                // Shift elements left to overwrite the deleted contact
-                for (int j = i; j < bCount - 1; j++) {
-                    business[j] = business[j + 1];
-                }
-                bCount--; // Decrease the business contact counter
-                break;
-            }
-        }
-    }
-
-    if (found) {
-        // --- EXPLICIT FILE HANDLING CORE START ---
-        ofstream phoneOut("D://lang//phonebook.txt");
-        
-        // Save remaining personal contacts
-        phoneOut << pCount << endl;
-        for (int i = 0; i < pCount; i++) {
-            personal[i].save(phoneOut); 
-        }
-        
-        // Save remaining business contacts
-        phoneOut << bCount << endl;
-        for (int i = 0; i < bCount; i++) {
-            business[i].save(phoneOut);
-        }
-        
-        phoneOut.close(); // Safeguard data flush to disk
-        // --- EXPLICIT FILE HANDLING CORE END ---
-
-        cout << "\n\tContact cleanly removed from database!" << endl;
-    } else {
-        cout << "\n\tError: Contact phone number not found." << endl;
-    }
-    
-    cin.ignore();
-    cin.get();
-}*/
+		
 
 void deleteContact() 
 {
     int delChoice = 0;
     
-    // Loop continuously until a fully valid option is successfully picked
+    
     while (true) {
         system("cls");
          setColor(14);
@@ -719,13 +647,13 @@ void deleteContact()
         cout << "\t| 3. Exit back to Submenu\n";
         cout << "\n\tEnter your choice (1-3): ";
          setColor(7);
-        // Check if input is a valid integer and within the allowed range
+        
         if (cin >> delChoice && delChoice >= 1 && delChoice <= 3) {
             cin.ignore(10000, '\n'); // Clear trailing characters out of the line buffer
             break; // Break the input loop when entry matches perfectly
         }
         
-        // Handle invalid entry (out of range or text/garbage input symbols)
+        
          setColor(12);
         cout << "\n\tInvalid choice! Please enter again. Press Enter to retry...";
         setColor(7);
@@ -784,6 +712,10 @@ void deleteContact()
     }
 
     if (found) {
+    	
+    	
+    	
+        
         saveAll(); // Sync clean working state directly back to text database file
          setColor(10);
         cout << "\n\tContact cleanly removed from database!" << endl;
@@ -797,7 +729,7 @@ void deleteContact()
         setColor(7);
     }
 }
-     setColor(10);
+	 setColor(10);
     cout << "\n\tPress Enter to continue...";
     cin.get();
 }
@@ -1007,6 +939,46 @@ setColor(10);
     cin.get(); // Wait for user acknowledgment
 }
 
+
+void searchByDesignation() 
+{
+    system("cls");
+    cin.ignore(); // Discard trailing newline characters safely
+    setColor(14);
+    string queryDesig;
+    cout << "\t_________________________________________________\n\n";
+    cout << "\t          SEARCH BUSINESS BY DESIGNATION         \n";
+    cout << "\t_________________________________________________\n\n";
+    setColor(10);
+    cout << "\tEnter Designation to Search: ";
+    setColor(7);
+    getline(cin, queryDesig);
+
+    bool found = false;
+
+    // Search strictly within Business Contacts array since Personal doesn't have designations
+    for (int i = 0; i < bCount; i++) {
+        if (toLowerCase(business[i].getDesignation()) == toLowerCase(queryDesig)) {
+            if (!found) {
+                setColor(10);
+                cout << "\n\t--- MATCH(ES) FOUND IN BUSINESS CONTACTS ---\n\n";
+            }
+            business[i].display(); // Prints matching profile information
+            found = true;
+        }
+    }
+
+    if (!found) {
+        setColor(12);
+        cout << "\n\tError: No business contacts matching that designation exist." << endl;
+    }
+    setColor(10);
+    cout << "\n\tPress Enter to return to search menu...";
+    cin.get(); 
+}
+
+
+
 void sortAlphabetically() 
 {
     system("cls");
@@ -1082,11 +1054,11 @@ setColor(14);
     
 	
 	if (cin >> lookupMethod && lookupMethod >= 1 && lookupMethod <= 3) {
-            cin.ignore(10000, '\n'); // Clear tracking newline spaces out of stream pipeline
-            break; // Input is fully valid, break the loop and continue downward!
+            cin.ignore(10000, '\n'); 
+            break; 
         }
         
-        setColor(12);// Triggers instantly if user keys in garbage text string variables or numbers out of bounds
+        setColor(12);
         cout << "\n\tInvalid choice! Please enter again. Press Enter to retry...";
         cin.clear();            // Reset the system stream error pipeline flag status
         cin.ignore(10000, '\n'); // Clean garbage values out of structural stream buffers
@@ -1375,7 +1347,7 @@ else if (choice == 6) { // NEW: Independent Citizen Update
                         }
                         if (isValidCitizenNo(personal[i].citizenNo)) break;
                         setColor(12);
-                        cout << "\tInvalid Citizen Number! Size must be 5-20 characters.\n\n";
+                        cout << "\tInvalid Citizen Number! Size must be 7-16 characters.\n\n";
                         setColor(7);
                     }
                     saveAll();
@@ -1388,6 +1360,21 @@ else if (choice == 6) { // NEW: Independent Citizen Update
                 
 
                                else if (choice == 7) { 
+                               system("cls");
+                    setColor(14);
+                    cout << "\n\tAre you sure you want to update all fields for this contact? (Y/N): ";
+                    char confirm;
+                    cin >> confirm;
+                    cin.ignore(); // Clean formatting buffer space
+
+                    if (confirm == 'n' || confirm == 'N') {
+                        setColor(12);
+                        cout << "\n\tUpdate cancelled! Returning to edit menu...\n";
+                        setColor(10);
+                        cout << "\tPress Enter to continue...";
+                        cin.get();
+                        continue; // Bypasses fields, loops right back to option list
+                    }
                     system("cls");
                     setColor(10);
                     cout << "\n\t--- UPDATE ALL FIELDS (PERSONAL) ---\n\n";
@@ -1499,7 +1486,7 @@ continue;
 }
 if (isValidCitizenNo(personal[i].citizenNo)) break;
 setColor(12);
-cout << "\tInvalid format! Size must be 5-20 characters.\n\n";
+cout << "\tInvalid format! Size must be 7-16 characters.\n\n";
 setColor(7);
 }
                      
@@ -1701,7 +1688,7 @@ continue;
 }
 if (isValidCitizenNo(business[i].citizenNo)) break;
 setColor(12);
-cout << "\tInvalid Citizen Number! Size must be 5-20 characters.\n\n";
+cout << "\tInvalid Citizen Number! Size must be 7-16 characters.\n\n";
 setColor(7);
 }
 saveAll();
@@ -1712,6 +1699,24 @@ cout << "\n\tPress Enter to continue...";
 cin.get();
 }
 										else if (choice == 7) {
+											
+											 system("cls");
+                        setColor(14);
+                        cout << "\n\tAre you sure you want to update all fields for this business contact? (Y/N): ";
+                        char confirm;
+                        cin >> confirm;
+                        cin.ignore(); // Clean formatting buffer space
+
+                        if (confirm == 'n' || confirm == 'N') {
+                            setColor(12);
+                            cout << "\n\tUpdate cancelled! Returning to edit menu...\n";
+                            setColor(10);
+                            cout << "\tPress Enter to continue...";
+                            cin.get();
+                            continue; // Bypasses inputs completely
+                        }
+                        
+                        
                         system("cls");
                         setColor(14);
                         cout << "\n\t--- UPDATE ALL FIELDS (BUSINESS) ---\n\n";
@@ -1883,7 +1888,8 @@ void Dash::me()
 	PhoneBook pb;
 	pb.loadAll();
 	int b;
-	while (b != 4) {
+	while (b != 4) 
+	{
 	system("cls");
 	setColor(14);
     cout<<"\t\t\t_________________________________________________\n\n\n"; 
@@ -1894,7 +1900,7 @@ void Dash::me()
     setColor(10);
     cout<<"\t| 1. Contact Operation       "<<endl; 
     cout<<"\t| 2. Search Contact 	      "<<endl;    //search by name
-    cout<<"\t| 3. Display                 "<<endl;    //sort alphabetically
+    cout<<"\t| 3. Contact Sorting         "<<endl;    //sort alphabetically
     cout<<"\t| 4. Exit					  "<<endl;
     cout<<"\n\t Enter your choice: "; 
     setColor(7);
@@ -1921,6 +1927,7 @@ void Dash::me()
 
 			if (c == 1) {
                     pb.addContact();
+                    
                 }
                 else if (c == 2) {
                     pb.displayAll();
@@ -1931,24 +1938,23 @@ void Dash::me()
                 else if (c == 4) {
                     pb.deleteContact();
                 }
-                // When c becomes 5, the while loop will exit naturally
-            } // 2. FIXED: Properly closed the while loop block here
-            
-            // Go back to main menu after exiting sub-menu operations
-            me(); 
-            break;
+           
+	          } // me(); 
+	            break;
         }
-        case 2:{
-			
+        case 2:
+		{
             int d=0;
-            while(d!=5){
+            while(d!=6)
+			{
             system("cls");
             setColor(10);
             cout<<"\t| 1. Search Contact by PhoneNumber "<<endl; 
 		    cout<<"\t| 2. Search Contact by Name        "<<endl;
 			cout<<"\t| 3. Search Contact by Email	    "<<endl; 
 			cout<<"\t| 4. Search Contact by Citizen No  "<<endl;
-		    cout<<"\t| 5. Menu                          "<<endl;  
+			cout<<"\t| 5. Search Business by Designation"<< endl;
+		    cout<<"\t| 6. Menu                          "<<endl;  
 		    cout<<"\n\t Enter your choice: ";
 		    setColor(7);
 		    cin>>d;
@@ -1969,9 +1975,14 @@ void Dash::me()
 			{
 				pb.searchByCitizenNo();
 			}
+			else if (d == 5) 
+			{ 
+				pb.searchByDesignation(); 
+			}
         }
-        me();
-            break;}
+        //me();
+        break;
+		}
         case 3:
         	pb.sortAlphabetically();
         	system("cls");
@@ -1984,8 +1995,8 @@ void Dash::me()
             obj.menu();
             break;
         }
-          default: {
-                // This catches any invalid choices in the main menu and loops back
+          default: 
+		   {
                 setColor(12); // Red text color
                 cout << "\tInvalid Option! Please enter a number between 1 and 4.\n";
                 cout << "\tPress Enter to continue...";
@@ -1994,11 +2005,12 @@ void Dash::me()
                 break;
             }
     }
-}
+    }
 }
 
 
-void Page::menu() {
+void Page::menu() 
+{
     int a;
     setColor(14);
     cout<<"\t\t\t_________________________________________________\n\n\n"; 
@@ -2023,10 +2035,10 @@ void Page::menu() {
         case 2: 
             registration(); 
             break;  
-           		 case 3: 
-           		 system("cls");
-			    exit(0);
-			            break;
+        case 3: 
+           	system("cls");
+			exit(0);
+			break;
 
         default: 
             system("cls"); 
